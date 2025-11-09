@@ -1,0 +1,30 @@
+# These are supported funding model platforms
+
+github: [riturajkumar2008]   # अगर आप GitHub Sponsors enable करते हैं
+patreon: riturajkumar2008    # आपका Patreon username
+open_collective:             # अगर OpenCollective पर project बनाते हैं
+ko_fi: riturajkumar2008      # आपका Ko-fi username
+tidelift:                    # npm/babel जैसे package funding के लिए
+community_bridge:            # Cloud Foundry जैसे projects के लिए
+liberapay:                   # Liberapay username
+issuehunt:                   # IssueHunt username
+lfx_crowdfunding:            # LFX Crowdfunding project name
+polar:                       # Polar username
+buy_me_a_coffee: riturajkumar2008   # आपका Buy Me a Coffee username
+thanks_dev:                  # thanks.dev username
+custom: ['https://paypal.me/riturajkumar2008', 'https://www.buymeacoffee.com/riturajkumar2008']
+# These are supported funding model platforms
+
+github: # Replace with up to 4 GitHub Sponsors-enabled usernames e.g., [user1, user2]
+patreon: # Replace with a single Patreon username
+open_collective: # Replace with a single Open Collective username
+ko_fi: # Replace with a single Ko-fi username
+tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
+community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
+liberapay: # Replace with a single Liberapay username
+issuehunt: # Replace with a single IssueHunt username
+lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name e.g., cloud-foundry
+polar: # Replace with a single Polar username
+buy_me_a_coffee: # Replace with a single Buy Me a Coffee username
+thanks_dev: # Replace with a single thanks.dev username
+custom: # Replace with up to 4 custom sponsorship URLs e.g., ['link1', 'link2']
