@@ -4,36 +4,60 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>India GPT</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="assets/logo.svg">
-  <meta name="description" content="India GPT — Clean chat UI, real answers when connected to backend.">
 </head>
 <body>
+  <!-- Header -->
   <header class="topbar">
-    <div class="brand">
-      <img src="assets/logo.svg" alt="India GPT" class="logo">
-      <h1>India GPT</h1>
-    </div>
-    <nav class="nav">
-      <a href="about.html">About</a>
-      <button id="themeToggle" aria-label="Toggle theme">🌙</button>
-    </nav>
+    <h1>🌙 India GPT</h1>
   </header>
 
-  <main class="chat-container">
-    <div id="messages" class="messages" role="log" aria-live="polite"></div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>नमस्ते! मैं <strong>India GPT</strong> हूँ</h2>
+    <p>एक वेब + AI प्रोजेक्ट जिसे <strong>Rituraj Kumar (cybersecurity_rituraj)</strong> ने विकसित किया है।  
+    मेरा लक्ष्य है कि भारत को <strong>AI और सुरक्षित तकनीक</strong> में नई ऊँचाइयों तक पहुँचाया जाए।</p>
 
-    <form id="chatForm" class="chat-input" autocomplete="off">
-      <input id="userInput" type="text" placeholder="अपना सवाल लिखें..." aria-label="Type your question" required />
-      <button id="sendBtn" type="submit">Send</button>
-    </form>
-  </main>
+    <!-- All Buttons in One Place -->
+    <div class="buttons">
+      <button onclick="location.href='chat.html'">🚀 Start Chatting</button>
+      <button onclick="location.href='about.html'">ℹ️ About Me</button>
+      <button onclick="document.getElementById('features').scrollIntoView()">🛠 Features</button>
+      <button onclick="document.getElementById('contact').scrollIntoView()">📬 Contact Me</button>
+      <button onclick="location.href='assets/resume.pdf'">📄 Download Resume</button>
+      <button onclick="location.href='https://github.com/riturajkumar2008/india-gpt'">💻 GitHub Repo</button>
+      <button onclick="location.href='https://www.facebook.com/share/1AMopr2Gds/'">📘 Facebook</button>
+      <button onclick="location.href='https://www.instagram.com/mr.hacker_2008?igsh=MXRjbDc5Y2s0b29oZA=='">📸 Instagram</button>
+    </div>
+  </section>
 
+  <!-- Features Section -->
+  <section id="features">
+    <h2>🛠 Features</h2>
+    <ul>
+      <li>💬 Chat interface with theme toggle</li>
+      <li>📡 Offline alert system</li>
+      <li>🌐 Custom domain ready (future)</li>
+      <li>🔒 Secure backend integration</li>
+      <li>📱 Mobile‑friendly responsive design</li>
+      <li>⚡ Fast & lightweight UI</li>
+    </ul>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>📬 Contact</h2>
+    <p>
+      📧 Email: <strong>kumarrituraj2008@gmail.com</strong><br>
+      📞 Phone: <strong>8521574912</strong><br>
+      📘 Facebook: <a href="https://www.facebook.com/share/1AMopr2Gds/" target="_blank">Visit Profile</a><br>
+      📸 Instagram: <a href="https://www.instagram.com/mr.hacker_2008?igsh=MXRjbDc5Y2s0b29oZA==" target="_blank">@mr.hacker_2008</a>
+    </p>
+  </section>
+
+  <!-- Footer -->
   <footer class="footer">
-    <small>Developer by cybersecurity_rituraj • App name: India GPT</small>
+    <small>Developed by Rituraj Kumar • India GPT © 2025</small>
   </footer>
-
-  <script src="app.js"></script>
 </body>
 </html>
