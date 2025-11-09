@@ -5,7 +5,7 @@ const sendBtn = document.getElementById("sendBtn");
 const themeToggle = document.getElementById("themeToggle");
 
 // Change this to your backend URL after deploy (Render/Vercel/Railway)
-const API_URL = "https://YOUR-BACKEND-URL.example.com/api/chat";
+const API_URL = "https://india-gpt.onrender.com/api/chat";
 
 function toggleTheme() {
   document.body.classList.toggle("light");
