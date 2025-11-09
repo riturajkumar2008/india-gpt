@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline | System Disconnected</title>
+  <style>
+    body {
+      background-color: #000000;
+      color: #00ff00;
+      font-family: Consolas, monospace;
+      padding: 20px;
+      margin: 0;
+      line-height: 1.5;
+      overflow: hidden;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    .prompt { color: #00ff00; }
+    .error { color: #ff0000; }
+    .info { color: #00ffff; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p class="prompt">> Initializing Offline Protocol...</p>
+    <p class="prompt">> C:\user\status\check.exe</p>
+    <p class="error">!!! ERROR: CONNECTION FAILED !!!</p>
+    <p class="info">------------------------------------</p>
+    <h1>[ SYSTEM OFFLINE ]</h1>
+    <p>A fatal network error has occurred. The application server cannot be reached.</p>
+    <p class="info">Data access temporarily restricted. Please verify your network connection and retry.</p>
+    <p class="prompt">> Current_User: <span style="color: #ffff00;">cybersecurity_rituraj</span></p>
+    <p class="prompt">> Last_Attempt: <span id="ts"></span></p>
+    <p class="info">Attempting automatic reconnection in 15 seconds...</p>
+    <p class="prompt">> _</p>
+  </div>
+  <script>
+    document.getElementById('ts').textContent =
+      new Date().toLocaleTimeString();
+    setTimeout(() => location.reload(), 15000);
+  </script>
+</body>
+</html>
