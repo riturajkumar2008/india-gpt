@@ -1,0 +1,8 @@
+[build]
+publish = "."
+command = ""
+
+[[redirects]]
+from = "/offline"
+to = "/offline.html"
+status = 200
