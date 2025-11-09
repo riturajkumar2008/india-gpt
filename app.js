@@ -4,15 +4,17 @@ const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 const themeToggle = document.getElementById("themeToggle");
 
-// Change this to your backend URL after deploy (Render/Vercel/Railway)
+// Backend API URL
 const API_URL = "https://india-gpt.onrender.com/api/chat";
 
+// Theme toggle
 function toggleTheme() {
   document.body.classList.toggle("light");
   themeToggle.textContent = document.body.classList.contains("light") ? "☀️" : "🌙";
 }
 themeToggle.addEventListener("click", toggleTheme);
 
+// Add message to chat window
 function addMessage(role, text) {
   const wrap = document.createElement("div");
   wrap.className = "message";
@@ -40,6 +42,7 @@ function addMessage(role, text) {
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
+// Send message to backend
 async function sendMessage(prompt) {
   addMessage("user", prompt);
   sendBtn.disabled = true;
@@ -51,19 +54,19 @@ async function sendMessage(prompt) {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ message: prompt }), // ✅ FIXED
     });
     if (!res.ok) throw new Error("Network error");
     const data = await res.json();
     lastMsg.querySelector(".content").textContent = data.reply;
   } catch (e) {
-    // If backend unreachable, redirect to offline page
     window.location.href = "offline.html";
   } finally {
     sendBtn.disabled = false;
   }
 }
 
+// Form submit handler
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const prompt = input.value.trim();
