@@ -56,20 +56,26 @@ app.post("/api/chat", async (req, res) => {
     });
 
     const data = await response.json();
-console.log("API raw response:", data); // ✅ Debugging
+    console.log("🔍 API raw response:", JSON.stringify(data, null, 2)); // ✅ Debugging
 
-// कुछ models "message.content" देते हैं, कुछ "text"
-let answer = "⚠️ Sorry, no answer found.";
-if (data.choices && data.choices.length > 0) {
-  if (data.choices[0].message && data.choices[0].message.content) {
-    answer = data.choices[0].message.content;
-  } else if (data.choices[0].text) {
-    answer = data.choices[0].text;
+    // ✅ Flexible answer extraction
+    let answer = "⚠️ Sorry, no answer found.";
+    if (data.choices && data.choices.length > 0) {
+      if (data.choices[0].message && data.choices[0].message.content) {
+        answer = data.choices[0].message.content;
+      } else if (data.choices[0].text) {
+        answer = data.choices[0].text;
+      }
+    }
+
+    res.json({ reply: answer });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ reply: "⚠️ Error fetching answer" });
   }
-}
+});
 
-res.json({ reply: answer });
-
+// ✅ Server listener हमेशा सबसे बाहर होना चाहिए
 app.listen(PORT, () => {
   console.log(`India GPT backend running on http://localhost:${PORT}`);
 });
