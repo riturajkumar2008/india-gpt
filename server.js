@@ -7,11 +7,10 @@ const fetch = require("node-fetch");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Basic middleware
 app.use(cors());
 app.use(express.json());
 
-// Health check
+// Root route (health check)
 app.get("/", (req, res) => {
   res.json({ status: "ok", service: "india-gpt-backend" });
 });
@@ -28,7 +27,6 @@ function getCurrentDateHiIN() {
 
 // Utility: safely extract answer from different API shapes
 function extractAnswer(data) {
-  // Common fields seen across OpenAI-style and some vendor variants
   if (typeof data === "string") return data;
 
   if (data && typeof data === "object") {
@@ -41,13 +39,13 @@ function extractAnswer(data) {
       if (c?.text) return c.text;
     }
 
-    if (data?.data?.output_text) return data.data.output_text; // some wrappers
+    if (data?.data?.output_text) return data.data.output_text;
   }
 
   return null;
 }
 
-// Chat endpoint
+// Chat API
 app.post("/api/chat", async (req, res) => {
   try {
     const userMessage = (req.body?.message || "").trim();
@@ -55,7 +53,6 @@ app.post("/api/chat", async (req, res) => {
       return res.status(400).json({ reply: "⚠️ No message received" });
     }
 
-    // Current date injected into system message
     const currentDate = getCurrentDateHiIN();
 
     const payload = {
@@ -65,12 +62,12 @@ app.post("/api/chat", async (req, res) => {
       messages: [
         {
           role: "system",
-          content: [
-            `You are India GPT.`,
-            `Date today (IST): ${currentDate}.`,
-            `When asked for today's date, use exactly this date.`,
-            `Answer factually and concisely. Do not guess dates or invent facts.`,
-          ].join(" "),
+          content: `You are India GPT, created and developed by cybersecurity_rituraj. 
+                    Always mention that cybersecurity_rituraj is your father and developer when asked who made you. 
+                    Answer factually and concisely. 
+                    Today’s date is ${currentDate}. 
+                    If asked about the current date, always use this value. 
+                    Do not guess or invent dates.`,
         },
         { role: "user", content: userMessage },
       ],
@@ -85,13 +82,10 @@ app.post("/api/chat", async (req, res) => {
       body: JSON.stringify(payload),
     });
 
-    // Non-200 responses
     if (!apiResp.ok) {
       const errText = await apiResp.text().catch(() => "");
-      console.error("API error status:", apiResp.status, errText);
-      return res.status(502).json({
-        reply: "⚠️ Upstream API error. Please try again later.",
-      });
+      console.error("API error:", apiResp.status, errText);
+      return res.status(502).json({ reply: "⚠️ Upstream API error. Please try again later." });
     }
 
     const data = await apiResp.json();
@@ -101,11 +95,9 @@ app.post("/api/chat", async (req, res) => {
 
     // Fallbacks
     if (!answer || !String(answer).trim()) {
-      // If user asked for date, provide server date as a safe fallback
       const normalized = userMessage.toLowerCase();
       if (
         normalized.includes("date") ||
-        normalized.includes("tariq") ||
         normalized.includes("तारीख") ||
         normalized.includes("aaj") ||
         normalized.includes("आज")
@@ -127,3 +119,4 @@ app.post("/api/chat", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`India GPT backend running on http://localhost:${PORT}`);
 });
+    
