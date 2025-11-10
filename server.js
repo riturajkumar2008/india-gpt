@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Root route
+// Root route (health check)
 app.get("/", (req, res) => {
   res.json({ status: "ok", service: "india-gpt-backend" });
 });
@@ -30,11 +30,13 @@ app.post("/api/chat", async (req, res) => {
       },
       body: JSON.stringify({
         model: "Meta-Llama-3.1-8B-Instruct",
+        temperature: 0.2,       // fast & concise
+        max_tokens: 512,        // limit length
         messages: [
           { 
-  role: "system", 
-  content: "You are India GPT, created and developed by cybersecurity_rituraj. Always mention that cybersecurity_rituraj is your father and developer when asked who made you." 
-},
+            role: "system", 
+            content: "You are India GPT, created and developed by cybersecurity_rituraj. Always mention that cybersecurity_rituraj is your father and developer when asked who made you. Answer factually, concisely, and never guess dates or data." 
+          },
           { role: "user", content: userMessage }
         ]
       })
