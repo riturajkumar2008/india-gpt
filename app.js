@@ -76,4 +76,4 @@ form.addEventListener("submit", (e) => {
 });
 
 // Welcome message
-addMessage("bot", "नमस्ते! मैं India GPT हूँ — backend से जुड़ने पर मैं real answers देता हूँ।");
+addMessage("bot", "नमस्ते! मैं India GPT हूँ — 
