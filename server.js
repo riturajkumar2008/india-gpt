@@ -55,23 +55,25 @@ app.post("/api/chat", async (req, res) => {
       })
     });
 
-    const data = await response.json();
-    console.log("🔍 API raw response:", JSON.stringify(data, null, 2)); // ✅ Debugging
+   const data = await response.json();
+console.log("🔍 API raw response:", JSON.stringify(data, null, 2)); // Debugging
 
-    // ✅ Flexible answer extraction
-    let answer = "⚠️ Sorry, no answer found.";
-    if (data.choices && data.choices.length > 0) {
-      if (data.choices[0].message && data.choices[0].message.content) {
-        answer = data.choices[0].message.content;
-      } else if (data.choices[0].text) {
-        answer = data.choices[0].text;
-      }
-    }
+let answer = "⚠️ Sorry, no answer found.";
 
-    res.json({ reply: answer });
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ reply: "⚠️ Error fetching answer" });
+// Flexible parsing
+if (data.output_text) {
+  answer = data.output_text;
+} else if (data.choices && data.choices.length > 0) {
+  if (data.choices[0].message && data.choices[0].message.content) {
+    answer = data.choices[0].message.content;
+  } else if (data.choices[0].content) {
+    answer = data.choices[0].content;
+  } else if (data.choices[0].text) {
+    answer = data.choices[0].text;
+  }
+}
+
+res.json({ reply: answer }); 
   }
 });
 
