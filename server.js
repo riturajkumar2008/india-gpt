@@ -1,4 +1,3 @@
-// server.js
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -103,7 +102,10 @@ app.post("/api/chat", async (req, res) => {
       ],
     };
 
-    const apiResp = await fetch("https://api.sambanova.ai/v1/chat/completions", {
+    // ✅ Use environment variable for API URL
+    const API_URL = process.env.LLM_API_URL || "https://api.sambanova.ai/v1/chat/completions";
+
+    const apiResp = await fetch(API_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.SAMBANOVA_API_KEY}`,
@@ -151,4 +153,4 @@ app.post("/api/chat", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`India GPT backend running on http://localhost:${PORT}`);
 });
-    
+
