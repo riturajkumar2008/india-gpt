@@ -4,7 +4,7 @@ const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 const themeToggle = document.getElementById("themeToggle");
 
-// ✅ Backend URL (easy to change later)
+// ✅ Backend URL
 const BACKEND_URL = "https://india-gpt-2.onrender.com/api/chat";
 
 // Theme toggle
@@ -42,15 +42,43 @@ function addMessage(role, text) {
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
-// ✅ Show typing indicator
+// Typing indicator
 function showTyping() {
   const wrap = document.createElement("div");
   wrap.className = "message typing";
-  wrap.innerHTML = `<div class="avatar bot">A</div>
-                    <div class="content">⌛ GPT is typing...</div>`;
+  wrap.innerHTML = `
+    <div class="avatar bot">A</div>
+    <div class="content">⌛ GPT is typing...</div>
+  `;
   messagesEl.appendChild(wrap);
   messagesEl.scrollTop = messagesEl.scrollHeight;
   return wrap;
+}
+
+// Inline error message + retry
+function showErrorInline(details = "⚠️ Connection failed.") {
+  const wrap = document.createElement("div");
+  wrap.className = "message error";
+  wrap.innerHTML = `
+    <div class="avatar bot">A</div>
+    <div class="content">
+      ${details}
+      <div style="margin-top:8px;">
+        <button id="retryBtn" class="btn">Retry</button>
+      </div>
+    </div>`;
+  messagesEl.appendChild(wrap);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+
+  const retryBtn = wrap.querySelector("#retryBtn");
+  retryBtn.addEventListener("click", () => {
+    const lastUser = [...messagesEl.querySelectorAll(".message")]
+      .reverse()
+      .find(m => m.querySelector(".meta")?.textContent === "You")
+      ?.querySelector(".content")?.textContent;
+
+    if (lastUser) sendMessage(lastUser);
+  });
 }
 
 // Send message to backend
@@ -58,7 +86,6 @@ async function sendMessage(prompt) {
   addMessage("user", prompt);
   sendBtn.disabled = true;
 
-  // Typing indicator
   const typingEl = showTyping();
 
   try {
@@ -67,15 +94,13 @@ async function sendMessage(prompt) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: prompt }),
     });
-    if (!res.ok) throw new Error("Network error");
-    const data = await res.json();
+    if (!res.ok) throw new Error(`Network error (${res.status})`);
 
-    typingEl.querySelector(".content").textContent = data.reply;
+    const data = await res.json();
+    typingEl.querySelector(".content").textContent = data.reply || "⚠️ Empty response.";
   } catch (e) {
-    typingEl.querySelector(".content").textContent = "⚠️ Connection failed. Switching offline mode...";
-    setTimeout(() => {
-      window.location.href = "offline.html";
-    }, 1500);
+    typingEl.remove();
+    showErrorInline(e.message || "⚠️ Connection failed.");
   } finally {
     sendBtn.disabled = false;
   }
@@ -90,5 +115,6 @@ form.addEventListener("submit", (e) => {
   sendMessage(prompt);
 });
 
-// Welcome message (short & clean)
+// Welcome message
 addMessage("bot", "नमस्ते! मैं India GPT हूँ 👋");
+    
