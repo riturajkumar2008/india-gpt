@@ -4,6 +4,9 @@ const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 const themeToggle = document.getElementById("themeToggle");
 
+// ✅ Backend URL (easy to change later)
+const BACKEND_URL = "https://india-gpt-2.onrender.com/api/chat";
+
 // Theme toggle
 function toggleTheme() {
   document.body.classList.toggle("light");
@@ -39,25 +42,40 @@ function addMessage(role, text) {
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
+// ✅ Show typing indicator
+function showTyping() {
+  const wrap = document.createElement("div");
+  wrap.className = "message typing";
+  wrap.innerHTML = `<div class="avatar bot">A</div>
+                    <div class="content">⌛ GPT is typing...</div>`;
+  messagesEl.appendChild(wrap);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return wrap;
+}
+
 // Send message to backend
 async function sendMessage(prompt) {
   addMessage("user", prompt);
   sendBtn.disabled = true;
-  const thinkingText = "सोच रहा हूँ…";
-  addMessage("bot", thinkingText);
-  const lastMsg = messagesEl.lastElementChild;
+
+  // Typing indicator
+  const typingEl = showTyping();
 
   try {
-    const res = await fetch("https://india-gpt-2.onrender.com/api/chat", {   // ✅ direct URL
+    const res = await fetch(BACKEND_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: prompt }),
     });
     if (!res.ok) throw new Error("Network error");
     const data = await res.json();
-    lastMsg.querySelector(".content").textContent = data.reply;
+
+    typingEl.querySelector(".content").textContent = data.reply;
   } catch (e) {
-    window.location.href = "offline.html";
+    typingEl.querySelector(".content").textContent = "⚠️ Connection failed. Switching offline mode...";
+    setTimeout(() => {
+      window.location.href = "offline.html";
+    }, 1500);
   } finally {
     sendBtn.disabled = false;
   }
@@ -73,5 +91,4 @@ form.addEventListener("submit", (e) => {
 });
 
 // Welcome message (short & clean)
-addMessage("bot", "नमस्ते! मैं India GPT हूँ");
-
+addMessage("bot", "नमस्ते! मैं India GPT हूँ 👋");
