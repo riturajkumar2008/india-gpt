@@ -21,6 +21,14 @@ app.post("/api/chat", async (req, res) => {
     return res.json({ reply: "⚠️ No message received" });
   }
 
+  // ✅ Current date from server (India Standard Time)
+  const today = new Date();
+  const currentDate = today.toLocaleDateString("hi-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
   try {
     const response = await fetch("https://api.sambanova.ai/v1/chat/completions", {
       method: "POST",
@@ -35,7 +43,12 @@ app.post("/api/chat", async (req, res) => {
         messages: [
           { 
             role: "system", 
-            content: "You are India GPT, created and developed by cybersecurity_rituraj. Always mention that cybersecurity_rituraj is your father and developer when asked who made you. Answer factually, concisely, and never guess dates or data." 
+            content: `You are India GPT, created and developed by cybersecurity_rituraj. 
+                      Always mention that cybersecurity_rituraj is your father and developer when asked who made you. 
+                      Answer factually and concisely. 
+                      Today’s date is ${currentDate}. 
+                      If asked about the current date, always use this value. 
+                      Do not guess or invent dates.` 
           },
           { role: "user", content: userMessage }
         ]
