@@ -5,7 +5,7 @@ const sendBtn = document.getElementById("sendBtn");
 const themeToggle = document.getElementById("themeToggle");
 
 // Backend API URL
-const API_URL = "https://india-gpt.onrender.com/api/chat";
+const API_URL = "https://india-gpt-2.onrender.com/api/chat";
 
 // Theme toggle
 function toggleTheme() {
