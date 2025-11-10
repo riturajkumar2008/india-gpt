@@ -5,22 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>India GPT</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    /* Extra CSS for search box */
-    #userInput {
-      font-size: 20px;       /* बड़ा text */
-      font-weight: bold;     /* bold text */
-      padding: 12px;         /* अंदर spacing */
-      width: 80%;            /* चौड़ाई */
-      border: 2px solid #333; /* गहरा बॉर्डर */
-      margin-top: 15px;
-    }
-    #sendBtn {
-      padding: 12px 20px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
   <!-- Header -->
@@ -34,22 +18,20 @@
     <p>एक वेब + AI प्रोजेक्ट जिसे <strong>Rituraj Kumar (cybersecurity_rituraj)</strong> ने विकसित किया है।  
     मेरा लक्ष्य है कि भारत को <strong>AI और सुरक्षित तकनीक</strong> में नई ऊँचाइयों तक पहुँचाया जाए।</p>
 
-    <!-- All Buttons in One Place -->
+    <!-- Buttons -->
     <div class="buttons">
       <button onclick="document.getElementById('chat').scrollIntoView()">🚀 Start Chatting</button>
       <button onclick="location.href='about.html'">ℹ️ About Me</button>
       <button onclick="location.href='assets/resume.pdf'">📄 Download Resume</button>
       <button onclick="location.href='https://github.com/riturajkumar2008/india-gpt'">💻 GitHub Repo</button>
-      <button onclick="location.href='https://www.facebook.com/share/1AMopr2Gds/'">📘 Facebook</button>
-      <button onclick="location.href='https://www.instagram.com/mr.hacker_2008?igsh=MXRjbDc5Y2s0b29oZA=='">📸 Instagram</button>
     </div>
   </section>
 
   <!-- Chat Section -->
-  <section id="chat">
+  <section id="chat" class="chat-container">
     <h2>💬 Chat with India GPT</h2>
-    <div id="messages"></div>
-    <form id="chatForm">
+    <div id="messages" class="messages"></div>
+    <form id="chatForm" class="chat-input">
       <input id="userInput" type="text" placeholder="Type your message..." />
       <button id="sendBtn" type="submit">Send</button>
     </form>
