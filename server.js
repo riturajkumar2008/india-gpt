@@ -56,13 +56,19 @@ app.post("/api/chat", async (req, res) => {
     });
 
     const data = await response.json();
-    const answer = data.choices?.[0]?.message?.content || "⚠️ Sorry, no answer found.";
-    res.json({ reply: answer });
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ reply: "⚠️ Error fetching answer" });
+console.log("API raw response:", data); // ✅ Debugging
+
+// कुछ models "message.content" देते हैं, कुछ "text"
+let answer = "⚠️ Sorry, no answer found.";
+if (data.choices && data.choices.length > 0) {
+  if (data.choices[0].message && data.choices[0].message.content) {
+    answer = data.choices[0].message.content;
+  } else if (data.choices[0].text) {
+    answer = data.choices[0].text;
   }
-});
+}
+
+res.json({ reply: answer });
 
 app.listen(PORT, () => {
   console.log(`India GPT backend running on http://localhost:${PORT}`);
