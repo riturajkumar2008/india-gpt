@@ -25,11 +25,7 @@ body {
   padding: 12px 16px; border-bottom: 1px solid var(--border);
   background: var(--panel);
 }
-.brand { display: flex; align-items: center; gap: 10px }
-.logo { width: 24px; height: 24px }
 .topbar h1 { font-size: 18px; margin: 0 }
-.nav { display: flex; align-items: center; gap: 12px }
-.nav a { color: var(--text); text-decoration: none; font-weight: 600 }
 
 #themeToggle {
   background: transparent; border: 1px solid var(--border); color: var(--text);
@@ -60,12 +56,13 @@ body {
   padding: 12px 16px; border-top: 1px solid var(--border); background: var(--panel);
 }
 .chat-input input {
-  padding: 12px; border-radius: 10px; border: 1px solid var(--border);
+  padding: 14px; border-radius: 10px; border: 2px solid var(--border);
   background: transparent; color: var(--text);
+  font-size: 20px; font-weight: bold;   /* ✅ bold & bigger */
 }
 .chat-input button {
   background: var(--accent); color: white; border: none; border-radius: 10px;
-  padding: 12px 16px; cursor: pointer; font-weight: 600;
+  padding: 14px 20px; cursor: pointer; font-weight: 700; font-size: 16px;
 }
 .chat-input button:disabled { opacity: 0.6; cursor: not-allowed }
 
@@ -84,4 +81,4 @@ body {
   --user: #0ea5e9;
   --bot: #475569;
   --border: #e5e7eb;
-}
+  }
