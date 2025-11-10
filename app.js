@@ -4,9 +4,6 @@ const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 const themeToggle = document.getElementById("themeToggle");
 
-// Backend API URL
-const API_URL = "https://india-gpt-2.onrender.com/api/chat";
-
 // Theme toggle
 function toggleTheme() {
   document.body.classList.toggle("light");
@@ -46,15 +43,15 @@ function addMessage(role, text) {
 async function sendMessage(prompt) {
   addMessage("user", prompt);
   sendBtn.disabled = true;
-  const thinkingText = "सोच रहा हूँ… ताज़ा जानकारी ला रहा हूँ.";
+  const thinkingText = "सोच रहा हूँ…";
   addMessage("bot", thinkingText);
   const lastMsg = messagesEl.lastElementChild;
 
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch("https://india-gpt-2.onrender.com/api/chat", {   // ✅ direct URL
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: prompt }), // ✅ FIXED
+      body: JSON.stringify({ message: prompt }),
     });
     if (!res.ok) throw new Error("Network error");
     const data = await res.json();
@@ -75,6 +72,6 @@ form.addEventListener("submit", (e) => {
   sendMessage(prompt);
 });
 
-// Welcome message
-addMessage("bot", "नमस्ते! मैं India GPT हूँ — backend से जुड़ने पर मैं real answers देता हूँ।");
+// Welcome message (short & clean)
+addMessage("bot", "नमस्ते! मैं India GPT हूँ");
 
