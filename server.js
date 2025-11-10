@@ -1,28 +1,51 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const fetch = require("node-fetch");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(cors());
-app.use(express.json()); // ✅ JSON body parser
+app.use(express.json());
 
-// Chat API
-app.post("/api/chat", (req, res) => {
-  const userMessage = req.body.message; // ✅ frontend se "message" aayega
+// Root route
+app.get("/", (req, res) => {
+  res.json({ status: "ok", service: "india-gpt-backend" });
+});
+
+// Chat API (connects to SambaNova)
+app.post("/api/chat", async (req, res) => {
+  const userMessage = req.body.message;
   if (!userMessage) {
     return res.json({ reply: "⚠️ No message received" });
   }
-  res.json({ reply: `You said: ${userMessage}` });
-});
 
-// Root route (optional)
-app.get("/", (req, res) => {
-  res.send("India GPT backend is running ✅");
+  try {
+    const response = await fetch("https://api.sambanova.ai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.SAMBANOVA_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "Meta-Llama-3.1-8B-Instruct",
+        messages: [
+          { role: "system", content: "You are India GPT. Answer factually and concisely for Indian context." },
+          { role: "user", content: userMessage }
+        ]
+      })
+    });
+
+    const data = await response.json();
+    const answer = data.choices?.[0]?.message?.content || "⚠️ Sorry, no answer found.";
+    res.json({ reply: answer });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ reply: "⚠️ Error fetching answer" });
+  }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`India GPT backend running on http://localhost:${PORT}`);
 });
-
