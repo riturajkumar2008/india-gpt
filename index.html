@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>India GPT</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Extra CSS for search box */
+    #userInput {
+      font-size: 20px;       /* बड़ा text */
+      font-weight: bold;     /* bold text */
+      padding: 12px;         /* अंदर spacing */
+      width: 80%;            /* चौड़ाई */
+      border: 2px solid #333; /* गहरा बॉर्डर */
+      margin-top: 15px;
+    }
+    #sendBtn {
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -22,8 +38,6 @@
     <div class="buttons">
       <button onclick="document.getElementById('chat').scrollIntoView()">🚀 Start Chatting</button>
       <button onclick="location.href='about.html'">ℹ️ About Me</button>
-      <button onclick="document.getElementById('features').scrollIntoView()">🛠 Features</button>
-      <button onclick="document.getElementById('contact').scrollIntoView()">📬 Contact Me</button>
       <button onclick="location.href='assets/resume.pdf'">📄 Download Resume</button>
       <button onclick="location.href='https://github.com/riturajkumar2008/india-gpt'">💻 GitHub Repo</button>
       <button onclick="location.href='https://www.facebook.com/share/1AMopr2Gds/'">📘 Facebook</button>
@@ -40,30 +54,6 @@
       <button id="sendBtn" type="submit">Send</button>
     </form>
     <button id="themeToggle">🌙 Toggle Theme</button>
-  </section>
-
-  <!-- Features Section -->
-  <section id="features">
-    <h2>🛠 Features</h2>
-    <ul>
-      <li>💬 Chat interface with theme toggle</li>
-      <li>📡 Offline alert system</li>
-      <li>🌐 Custom domain ready (future)</li>
-      <li>🔒 Secure backend integration</li>
-      <li>📱 Mobile‑friendly responsive design</li>
-      <li>⚡ Fast & lightweight UI</li>
-    </ul>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact">
-    <h2>📬 Contact</h2>
-    <p>
-      📧 Email: <strong>kumarrituraj2008@gmail.com</strong><br>
-      📞 Phone: <strong>8521574912</strong><br>
-      📘 Facebook: <a href="https://www.facebook.com/share/1AMopr2Gds/" target="_blank">Visit Profile</a><br>
-      📸 Instagram: <a href="https://www.instagram.com/mr.hacker_2008?igsh=MXRjbDc5Y2s0b29oZA==" target="_blank">@mr.hacker_2008</a>
-    </p>
   </section>
 
   <!-- Footer -->
