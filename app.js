@@ -4,7 +4,7 @@ const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 const themeToggle = document.getElementById("themeToggle");
 
-// ✅ Backend URL
+// ✅ Backend URL (easy to change later)
 const BACKEND_URL = "https://india-gpt-2.onrender.com/api/chat";
 
 // Theme toggle
@@ -117,4 +117,3 @@ form.addEventListener("submit", (e) => {
 
 // Welcome message
 addMessage("bot", "नमस्ते! मैं India GPT हूँ 👋");
-    
