@@ -15,6 +15,30 @@ app.get("/", (req, res) => {
   res.json({ status: "ok", service: "india-gpt-backend" });
 });
 
+// ✅ Extra API: health check
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "healthy",
+    service: "india-gpt-backend",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// ✅ Extra API: info (developer + date)
+app.get("/api/info", (req, res) => {
+  const currentDate = new Date().toLocaleDateString("hi-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  res.json({
+    name: "India GPT",
+    developer: "cybersecurity_rituraj",
+    currentDate,
+    message: "India GPT backend is running fine 🚀",
+  });
+});
+
 // Utility: get current date string in Hindi (IST-style)
 function getCurrentDateHiIN() {
   const now = new Date();
@@ -53,6 +77,12 @@ app.post("/api/chat", async (req, res) => {
       return res.status(400).json({ reply: "⚠️ No message received" });
     }
 
+    // ✅ Check API key
+    if (!process.env.SAMBANOVA_API_KEY) {
+      console.error("❌ Missing SAMBANOVA_API_KEY");
+      return res.status(500).json({ reply: "⚠️ API key not configured on server." });
+    }
+
     const currentDate = getCurrentDateHiIN();
 
     const payload = {
@@ -85,7 +115,9 @@ app.post("/api/chat", async (req, res) => {
     if (!apiResp.ok) {
       const errText = await apiResp.text().catch(() => "");
       console.error("API error:", apiResp.status, errText);
-      return res.status(502).json({ reply: "⚠️ Upstream API error. Please try again later." });
+      return res.status(apiResp.status).json({
+        reply: `⚠️ Upstream API error (${apiResp.status}). Please try again later.`,
+      });
     }
 
     const data = await apiResp.json();
@@ -93,7 +125,7 @@ app.post("/api/chat", async (req, res) => {
 
     let answer = extractAnswer(data);
 
-    // Fallbacks
+    // ✅ Strong fallback
     if (!answer || !String(answer).trim()) {
       const normalized = userMessage.toLowerCase();
       if (
@@ -104,14 +136,14 @@ app.post("/api/chat", async (req, res) => {
       ) {
         answer = `आज की तारीख़ ${currentDate} है।`;
       } else {
-        answer = "मैं अभी आपके सवाल का जवाब नहीं दे पा रहा। कृपया दोबारा कोशिश करें।";
+        answer = "⚠️ Sorry, I couldn't generate a reply. Please try again.";
       }
     }
 
     return res.json({ reply: answer });
   } catch (err) {
     console.error("❌ Server error:", err);
-    return res.status(500).json({ reply: "⚠️ Error fetching answer" });
+    return res.status(500).json({ reply: "⚠️ Internal server error" });
   }
 });
 
